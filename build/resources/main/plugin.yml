@@ -1,0 +1,6 @@
+name: MemoryGame
+version: '1.0-SNAPSHOT'
+main: plugin.memoryGame.Main
+api-version: '1.21'
+commands:
+  memoryGame:
