@@ -40,7 +40,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   public static final String NONE = "none";
   private static final int SIDE_LENGTH = 4; // ブロックの配置の行と列の数
   private static final int BLOCK_SPACING = 3; // ブロック間のスペース
-  private static final int INITIAL_GAME_TIME = 30; // 初期時間
+  private static final int INITIAL_GAME_TIME = 90; // 初期時間
   private static World hardDifficultyWorld;
   // マップとリストの定義
   private static Map<UUID, Integer> entityPairMap = new HashMap<>();
