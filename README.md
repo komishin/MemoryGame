@@ -1,7 +1,7 @@
 # MemoryGme
 出現したブロックやエンティティーの中ならペアを見つけて、ペア数もしくは、クリア時間の速さを競うゲームです。
 
-
+![demo](https://user-images.githubusercontent.com/xxxxx.gif)
 
 ## ゲームの概要
 ゲーム開始時には、常に体力を空腹度をMAXにする.
