@@ -46,7 +46,7 @@
 
 ## 対応バージョン
 
-　・Minecraft : 1.21.4
+  ・Minecraft : 1.21.4
 
   ・Spigot : 1.21.4
 
