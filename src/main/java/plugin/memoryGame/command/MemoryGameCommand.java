@@ -163,12 +163,20 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    *         それ以外の場合は "NONE"
    */
   private String getDifficulty(String[] args, Player player) {
-    if (args.length == 1 && (EASY.equals(args[0]) || NORMAL.equals(args[0]) || HARD.equals(args[0]))) {
+    Set<String> difficulties = new HashSet<>();
+    difficulties.add("easy");
+    difficulties.add("normal");
+    difficulties.add("hard");
+
+    if (args.length == 1 && difficulties.contains(args[0])) {
       return args[0];
     }
+
+    // エラーメッセージを送信
     player.sendMessage(ChatColor.RED + "実行できません。コマンド引数の１つ目に難易度設定が必要です。[easy, normal, hard]");
-    return NONE;
+    return "none";
   }
+
 
   /**
    * プレイヤーを回復し、最高級の装備を与える。
