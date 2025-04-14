@@ -92,7 +92,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
       return false;
     }
 
-    // 難易度をplayerScoreListに登録
+
     setPlayerDifficulty(player, difficulty);
 
     resetPlayerScore(player);
@@ -364,9 +364,9 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * プレイヤーごとのゲームタイマーを開始します。
-   * 既存のタイマーがある場合はキャンセルし、新しいタイマーを開始します。
-   * タイマーが0になると、ゲームを終了し、プレイヤーに通知します。
+   * プレイヤーごとのゲームタイマーを開始。
+   * 既存のタイマーがある場合はキャンセルし、新しいタイマーを開始。
+   * タイマーが0になると、ゲームを終了し、プレイヤーに通知。
    *
    * @param player ゲームタイマーを開始するプレイヤー
    */
@@ -657,10 +657,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    * プレイヤーがエンティティとインタラクションを行った際に処理を行うイベントハンドラ。
    * このメソッドは、プレイヤーがエンティティを右クリックした場合に呼び出される。
    * メインハンドでのインタラクションのみを処理。
-   * 主な機能：
-   * 1. プレイヤーが右クリックしたエンティティを取得。
-   * 2. メインハンドでのインタラクションのみを対象。
-   * 3. エンティティとのインタラクション処理を `handleEntityInteraction` メソッドに委譲。
    *
    * @param event プレイヤーのエンティティインタラクションイベント
    */
@@ -675,11 +671,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   /**
    * エンティティがプレイヤーから攻撃（ダメージ）を受けた際に処理を行うイベントハンドラ。
    * このメソッドは、プレイヤーがエンティティを攻撃（左クリック）した場合に呼び出される。
-   * 主な機能：
-   * 1. ダメージを与えた者がプレイヤーであるかを確認。
-   * 2. プレイヤーによる攻撃の場合、エンティティとのインタラクション処理を
-   *    `handleEntityInteraction` メソッドに委譲。
-   * 3. インタラクションの種類を "左クリック" として扱う。
    *
    * @param event エンティティがダメージを受けたイベント
    */
