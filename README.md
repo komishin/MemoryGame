@@ -87,7 +87,6 @@
 
 ## スコア確認動画
 
-![2025-04-0717 05 30-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/b5126dce-3b77-44df-b372-24638cb9ab99)
 
 ## 対応バージョン
 
