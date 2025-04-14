@@ -101,7 +101,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
 
     Location finalLocation = getFinalLocation(player);
 
-    // カウントダウンを開始し、終了後にブロック配置を実行
     startCountdown(player, finalLocation, difficulty);
 
     return true;
@@ -149,7 +148,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   private void resetPlayerScore(Player player) {
     for (ExecutingPlayer executingPlayer : executingPlayerList) {
       if (executingPlayer.getPlayerName().equals(player.getName())) {
-        executingPlayer.setScore(0); // スコアを0にリセット
+        executingPlayer.setScore(0);
         break;
       }
     }
@@ -265,8 +264,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     Map<Integer, UUID> idMap = new HashMap<>();
     AtomicInteger idCounter = new AtomicInteger(0);
 
-    // フィールドのenemyMapを使用
-    enemyMap.clear(); // 既存のデータをクリア
+    enemyMap.clear();
 
     switch (difficulty) {
       case EASY -> spawnBlocks(finalLocation, Material.OAK_WOOD, idMap, enemyMap, idCounter);
@@ -285,7 +283,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    */
   private void spawnBlocks(Location centerLocation, Material material,
       Map<Integer, UUID> idMap,
-      Map<UUID, Object> enemyMap, // 引数から削除
+      Map<UUID, Object> enemyMap,
       AtomicInteger idCounter) {
     Location baseLocation = centerLocation.clone().add(
         -(SIDE_LENGTH - 1) * BLOCK_SPACING / 2.0,
@@ -304,7 +302,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
         UUID uuid = UUID.randomUUID();
         int id = idCounter.incrementAndGet();
         idMap.put(id, uuid);
-        enemyMap.put(uuid, block); // クラスフィールドのenemyMapに格納
+        enemyMap.put(uuid, block);
         entityPairMap.put(uuid, pairIds.get(index));
         index++;
       }
@@ -321,7 +319,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    */
   private void spawnEntities(Location centerLocation, EntityType entityType,
       Map<Integer, UUID> idMap,
-      Map<UUID, Object> enemyMap, // 引数から削除
+      Map<UUID, Object> enemyMap,
       AtomicInteger idCounter) {
     Location baseLocation = centerLocation.clone().add(
         -(SIDE_LENGTH - 1) * BLOCK_SPACING / 2.0,
@@ -339,7 +337,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
         UUID uuid = entity.getUniqueId();
         int id = idCounter.incrementAndGet();
         idMap.put(id, uuid);
-        enemyMap.put(uuid, entity); // クラスフィールドのenemyMapに格納
+        enemyMap.put(uuid, entity);
         entityPairMap.put(uuid, pairIds.get(index));
         index++;
       }
@@ -380,10 +378,9 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     BukkitTask task = Bukkit.getScheduler().runTaskTimer(main, () -> {
       if (remainingTime.get() > 0) {
         remainingTime.decrementAndGet();
-        if (enemyMap.isEmpty()) { // 全てのペアが消えた場合
-          int clearTime = INITIAL_GAME_TIME - remainingTime.get(); // クリア時間を計算
+        if (enemyMap.isEmpty()) {
+          int clearTime = INITIAL_GAME_TIME - remainingTime.get();
 
-          // PlayerScoreオブジェクトを取得して渡す
           for (ExecutingPlayer playerScore : executingPlayerList) {
             if (playerScore.getPlayerName().equals(player.getName())) {
               handleGameClear(player, clearTime, playerScore);
@@ -392,7 +389,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
           }
         }
       } else {
-        // PlayerScoreオブジェクトを取得して渡す
         for (ExecutingPlayer playerScore : executingPlayerList) {
           if (playerScore.getPlayerName().equals(player.getName())) {
             handleTimeUp(player, playerScore);
@@ -418,7 +414,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
       activeTimers.get(player).cancel();
     }
 
-    // クリック情報をクリア
     clearClickData(player);
 
     addCleaTimeList(player, clearTime);
@@ -434,7 +429,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     );
 
     if (HARD.equals(executingPlayer.getDifficulty())) {
-      restoreWorldTime(player); // ワールドの時間を元に戻す
+      restoreWorldTime(player);
     }
   }
 
@@ -449,10 +444,8 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     activeTimers.remove(player);
     clearSpawnedEntities();
 
-    // クリック情報をクリア
     clearClickData(player);
 
-    // 制限時間をそのまま記録
     addCleaTimeList(player, INITIAL_GAME_TIME);
 
     playerScoreData.insert(new PlayerScore(executingPlayer.getPlayerName(), executingPlayer.getScore(),
@@ -465,7 +458,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     );
 
     if (HARD.equals(executingPlayer.getDifficulty())) {
-      restoreWorldTime(player); // ワールドの時間を元に戻す
+      restoreWorldTime(player);
     }
   }
 
@@ -475,7 +468,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    * @param world 時間を変更するワールド
    */
   private void setNight(World world) {
-    world.setTime(18000); // 夜にする
+    world.setTime(18000);
   }
 
   /**
@@ -485,8 +478,8 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    */
   private void restoreWorldTime(Player player) {
     if (hardDifficultyWorld != null && hardDifficultyWorld.equals(player.getWorld())) {
-      hardDifficultyWorld.setTime(0); // 朝にする
-      hardDifficultyWorld = null; // ワールド情報をクリア
+      hardDifficultyWorld.setTime(0);
+      hardDifficultyWorld = null;
     }
   }
 
@@ -513,7 +506,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   private void setPlayerDifficulty(Player player, String difficulty) {
     for (ExecutingPlayer executingPlayer : executingPlayerList) {
       if (executingPlayer.getPlayerName().equals(player.getName())) {
-        executingPlayer.setDifficulty(difficulty); // 難易度を設定
+        executingPlayer.setDifficulty(difficulty);
         break;
       }
     }
@@ -525,13 +518,11 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    * @param player    ゲームをクリアしたプレイヤー
    */
   private void addCleaTimeList(Player player, int clearTime) {
-    // PlayerScoreにクリア時間を登録
     for (ExecutingPlayer executingPlayer : executingPlayerList) {
       if (executingPlayer.getPlayerName().equals(player.getName())) {
-        // 時間制限を超えていたら設定時間（INITIAL_GAME_TIME）を使用
         int finalClearTime = Math.min(clearTime, INITIAL_GAME_TIME);
 
-        executingPlayer.setClearTime(finalClearTime); // PlayerScoreの値を更新
+        executingPlayer.setClearTime(finalClearTime);
         player.sendMessage(ChatColor.GOLD + "タイム: " + finalClearTime + "秒");
         break;
       }
@@ -568,14 +559,12 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
       Block clickedBlock = event.getClickedBlock();
       if (clickedBlock != null) {
 
-        //もし、間違いリストに入っているプレイヤーだったら、最初からやり直せ！
-        // 新しい開始を待っている場合、状態をリセットして新しいゲームを開始
         if (missMatchList.contains(playerId)) {
           missMatchList.remove(playerId);
           firstClickedBlockUUIDs.remove(playerId);
           firstClickedBlockPairIds.remove(playerId);
           player.sendMessage("最初から選び直してください。");
-          return; // 新しいゲームを開始するために、このインタラクションの残りの処理をスキップ
+          return;
         }
 
         Location blockLocation = clickedBlock.getLocation();
@@ -584,7 +573,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
         if (blockUUID != null && entityPairMap.containsKey(blockUUID)) {
           int currentPairId = entityPairMap.get(blockUUID);
 
-          // 同じブロックを連続でクリックした場合の対策
           if (firstClickedBlockUUIDs.containsKey(playerId) &&
               firstClickedBlockUUIDs.get(playerId).equals(blockUUID)) {
             return;
@@ -595,19 +583,15 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
             int lastClickedBlockPairId = firstClickedBlockPairIds.get(playerId);
 
             if (lastClickedBlockPairId == currentPairId && !lastClickedBlockUUID.equals(blockUUID)) {
-              // ペアが見つかった場合
               handleMatchedPair(player, lastClickedBlockUUID, blockUUID);
             } else {
-              // ペアが合わなかった場合
               int blockId = entityPairMap.get(blockUUID);
               player.sendMessage(ChatColor.GREEN + "ブロックのNo:" + blockId);
               missMatchList.add(playerId); // 新しい開始を待つ状態にする
             }
-            // 状態をリセット
             firstClickedBlockUUIDs.remove(playerId);
             firstClickedBlockPairIds.remove(playerId);
           } else {
-            // 初回クリック時
             firstClickedBlockUUIDs.put(playerId, blockUUID);
             firstClickedBlockPairIds.put(playerId, currentPairId);
             int blockId = entityPairMap.get(blockUUID);
@@ -627,7 +611,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
         return entry.getKey();
       }
     }
-    return null; // 該当するブロックが見つからない場合はnullを返す
+    return null;
   }
 
   /**
@@ -636,20 +620,19 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   private void handleMatchedPair(Player player, UUID lastBlockUUID, UUID currentBlockUUID) {
     Block lastBlock = (Block) enemyMap.get(lastBlockUUID);
     if (lastBlock != null) {
-      lastBlock.setType(Material.AIR); // ブロックを削除（空気に変更）
+      lastBlock.setType(Material.AIR);
     }
     Block currentBlock = (Block) enemyMap.get(currentBlockUUID);
     if (currentBlock != null) {
-      currentBlock.setType(Material.AIR); // ブロックを削除（空気に変更）
+      currentBlock.setType(Material.AIR);
     }
 
-    // マップからエントリを削除
     enemyMap.remove(lastBlockUUID);
     enemyMap.remove(currentBlockUUID);
     entityPairMap.remove(lastBlockUUID);
     entityPairMap.remove(currentBlockUUID);
 
-    addScore(player); // スコア加算処理
+    addScore(player);
   }
 
 
@@ -662,7 +645,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
    */
   @EventHandler
   public void onEntityInteract(PlayerInteractEntityEvent event) {
-    // メインハンドでの右クリックのみを処理
     if (event.getHand() == EquipmentSlot.HAND) {
       handleEntityInteraction(event.getPlayer(), event.getRightClicked(), "右クリック");
     }
@@ -678,7 +660,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   public void onEntityDamage(EntityDamageByEntityEvent event) {
     if (event.getDamager() instanceof Player) {
       handleEntityInteraction((Player) event.getDamager(), event.getEntity(), "左クリック");
-      // ダメージを受けたエンティティがenemyMapに登録されている場合、ダメージをキャンセル
       if (enemyMap.containsKey(event.getEntity().getUniqueId())) {
         event.setCancelled(true);
       }
@@ -697,19 +678,17 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     UUID playerId = player.getUniqueId();
     UUID entityUUID = target.getUniqueId();
 
-    // 新しい開始を待っている場合、状態をリセットして新しいゲームを開始
     if (missMatchList.contains(playerId)) {
       missMatchList.remove(playerId);
       lastClickedEntityIds.remove(playerId);
       lastClickedPairIds.remove(playerId);
       player.sendMessage("最初から選び直してください。");
-      return; // 新しいゲームを開始するために、このインタラクションの残りの処理をスキップ
+      return;
     }
 
     if (entityPairMap.containsKey(entityUUID)) {
       int currentPairId = entityPairMap.get(entityUUID);
 
-      // 同じエンティティを連続でクリックした場合の対策
       if (lastClickedEntityIds.containsKey(playerId) &&
           lastClickedEntityIds.get(playerId).equals(entityUUID)) {
         return;
@@ -720,19 +699,15 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
         int lastClickedPairId = lastClickedPairIds.get(playerId);
 
         if (lastClickedPairId == currentPairId && !lastClickedEntityUUID.equals(entityUUID)) {
-          // ペアが見つかった場合
           handleMatchedEntityPair(player, lastClickedEntityUUID, entityUUID);
         } else {
-          // ペアが合わなかった場合
           int entityId = entityPairMap.get(entityUUID);
           player.sendMessage(ChatColor.GREEN + "エンティティーNo:" + entityId);
-          missMatchList.add(playerId); // 新しい開始を待つ状態にする
+          missMatchList.add(playerId);
         }
-        // 状態をリセット
         lastClickedEntityIds.remove(playerId);
         lastClickedPairIds.remove(playerId);
       } else {
-        // 初回クリック時
         lastClickedEntityIds.put(playerId, entityUUID);
         lastClickedPairIds.put(playerId, currentPairId);
         int entityId = entityPairMap.get(entityUUID);
@@ -752,7 +727,6 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     Entity lastEntity = (Entity) enemyMap.get(lastEntityUUID);
     Entity currentEntity = (Entity) enemyMap.get(currentEntityUUID);
 
-    // エンティティが存在する場合は削除
     if (lastEntity != null) {
       lastEntity.remove();
     }
@@ -760,29 +734,27 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
       currentEntity.remove();
     }
 
-    // マップからエントリを削除
     enemyMap.remove(lastEntityUUID);
     enemyMap.remove(currentEntityUUID);
     entityPairMap.remove(lastEntityUUID);
     entityPairMap.remove(currentEntityUUID);
 
-    addScore(player); // スコア加算処理
+    addScore(player);
   }
 
   /**
    * スポーンしたエンティティをクリアする
    */
   private void clearSpawnedEntities() {
-    // enemyMapに格納されたエンティティを削除
     for (Object obj : enemyMap.values()) {
       if (obj instanceof Entity) {
         Entity entity = (Entity) obj;
-        entity.remove(); // エンティティを削除
+        entity.remove();
       } else if (obj instanceof Block) {
         Block block = (Block) obj;
-        block.setType(Material.AIR); // ブロックを空気ブロックに変更して削除
+        block.setType(Material.AIR);
       }
     }
-    enemyMap.clear(); // マップをクリア
+    enemyMap.clear();
   }
 }
