@@ -39,7 +39,7 @@
 
 ## プレイ動画（easyバージョン）
 
-
+https://github.com/user-attachments/assets/c50349c5-2f8b-4059-96fb-6a155248ae09
 
 ## ゲームの概要
 　ゲーム開始時には、常に体力を空腹度をMAXにする.
