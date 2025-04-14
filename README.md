@@ -39,7 +39,7 @@
 
 ## プレイ動画（easyバージョン）
 
-https://github.com/komishin/MemoryGame.git
+
 
 ## ゲームの概要
 　ゲーム開始時には、常に体力を空腹度をMAXにする.
@@ -87,7 +87,7 @@ https://github.com/komishin/MemoryGame.git
 
 ## スコア確認動画
 
-https://www.youtube.com/watch?v=RgzCc_bCUmE
+![2025-04-0717 05 30-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/b5126dce-3b77-44df-b372-24638cb9ab99)
 
 ## 対応バージョン
 
