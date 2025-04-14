@@ -88,6 +88,9 @@ https://github.com/user-attachments/assets/c50349c5-2f8b-4059-96fb-6a155248ae09
 ## スコア確認動画
 
 
+https://github.com/user-attachments/assets/9dba46c7-30a5-4ae1-95ab-65deb59310b8
+
+
 ## 対応バージョン
 
   ・Minecraft : 1.21.4
