@@ -39,7 +39,7 @@
 
 ## プレイ動画（easyバージョン）
 
-https://www.youtube.com/watch?v=JnM0av9KKqE
+https://github.com/user-attachments/assets/c50349c5-2f8b-4059-96fb-6a155248ae09
 
 ## ゲームの概要
 　ゲーム開始時には、常に体力を空腹度をMAXにする.
@@ -87,7 +87,9 @@ https://www.youtube.com/watch?v=JnM0av9KKqE
 
 ## スコア確認動画
 
-https://www.youtube.com/watch?v=RgzCc_bCUmE
+
+https://github.com/user-attachments/assets/9dba46c7-30a5-4ae1-95ab-65deb59310b8
+
 
 ## 対応バージョン
 
