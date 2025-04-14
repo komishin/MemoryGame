@@ -754,7 +754,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
           handleMatchedEntityPair(player, lastClickedEntityUUID, entityUUID);
         } else {
           int entityId = entityPairMap.get(entityUUID);
-          player.sendMessage(ChatColor.GREEN + "エンティティーNo:" + entityId);
+          player.sendMessage(ChatColor.GREEN + "エンティティNo:" + entityId);
           missMatchList.add(playerId);
         }
         lastClickedEntityIds.remove(playerId);
@@ -763,7 +763,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
         lastClickedEntityIds.put(playerId, entityUUID);
         lastClickedPairIds.put(playerId, currentPairId);
         int entityId = entityPairMap.get(entityUUID);
-        player.sendMessage(ChatColor.GREEN + "エンティティーNo:" + entityId);
+        player.sendMessage(ChatColor.GREEN + "エンティティNo:" + entityId);
       }
     }
   }
