@@ -538,7 +538,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * プレイヤーのクリック情報をクリアする。
+   * プレイヤーのクリック情報をクリア。
    *
    * @param player クリック情報をクリアするプレイヤー
    */
@@ -552,10 +552,9 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * プレイヤーのブロックインタラクションを処理するイベントハンドラ。
-   * このメソッドは、プレイヤーがブロックを右クリックまたは左クリックした際に呼び出される。
+   * プレイヤーがブロックをクリックした際のイベントを処理。
    *
-   * @param event プレイヤーのインタラクションイベント
+   * @param event プレイヤーのクリックイベント。
    */
   @EventHandler
   public void onPlayerInteract(PlayerInteractEvent event) {
@@ -565,53 +564,94 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
 
     if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK) {
       Block clickedBlock = event.getClickedBlock();
-      if (clickedBlock != null) {
+      if (clickedBlock == null) {
+        return;
+      }
 
-        if (missMatchList.contains(playerId)) {
-          missMatchList.remove(playerId);
-          firstClickedBlockUUIDs.remove(playerId);
-          firstClickedBlockPairIds.remove(playerId);
-          player.sendMessage("最初から選び直してください。");
-          return;
-        }
+      if (missMatchList.contains(playerId)) {
+        resetPlayerState(playerId, player);
+        return;
+      }
 
-        Location blockLocation = clickedBlock.getLocation();
-        UUID blockUUID = findBlockUUID(blockLocation);
+      Location blockLocation = clickedBlock.getLocation();
+      UUID blockUUID = findBlockUUID(blockLocation);
 
-        if (blockUUID != null && entityPairMap.containsKey(blockUUID)) {
-          int currentPairId = entityPairMap.get(blockUUID);
-
-          if (firstClickedBlockUUIDs.containsKey(playerId) &&
-              firstClickedBlockUUIDs.get(playerId).equals(blockUUID)) {
-            return;
-          }
-
-          if (firstClickedBlockUUIDs.containsKey(playerId)) {
-            UUID lastClickedBlockUUID = firstClickedBlockUUIDs.get(playerId);
-            int lastClickedBlockPairId = firstClickedBlockPairIds.get(playerId);
-
-            if (lastClickedBlockPairId == currentPairId && !lastClickedBlockUUID.equals(blockUUID)) {
-              handleMatchedPair(player, lastClickedBlockUUID, blockUUID);
-            } else {
-              int blockId = entityPairMap.get(blockUUID);
-              player.sendMessage(ChatColor.GREEN + "ブロックのNo:" + blockId);
-              missMatchList.add(playerId); // 新しい開始を待つ状態にする
-            }
-            firstClickedBlockUUIDs.remove(playerId);
-            firstClickedBlockPairIds.remove(playerId);
-          } else {
-            firstClickedBlockUUIDs.put(playerId, blockUUID);
-            firstClickedBlockPairIds.put(playerId, currentPairId);
-            int blockId = entityPairMap.get(blockUUID);
-            player.sendMessage(ChatColor.GREEN + "ブロックNo:" + blockId);
-          }
-        }
+      if (blockUUID != null && entityPairMap.containsKey(blockUUID)) {
+        handleBlockInteraction(player, playerId, blockUUID);
       }
     }
   }
 
   /**
-   * ブロックの位置情報から対応するUUIDを検索します。
+   * プレイヤーの状態をリセット。
+   *
+   * @param playerId リセット対象のプレイヤーのUUID
+   * @param player リセット対象のプレイヤーオブジェクト
+   */
+  private void resetPlayerState(UUID playerId, Player player) {
+    missMatchList.remove(playerId);
+    firstClickedBlockUUIDs.remove(playerId);
+    firstClickedBlockPairIds.remove(playerId);
+    player.sendMessage("最初から選び直してください。");
+  }
+
+  /**
+   * プレイヤーがクリックしたブロックの処理。
+   *
+   * @param player クリックしたプレイヤーオブジェクト
+   * @param playerId クリックしたプレイヤーのUUID
+   * @param blockUUID クリックされたブロックのUUID
+   */
+  private void handleBlockInteraction(Player player, UUID playerId, UUID blockUUID) {
+    int currentPairId = entityPairMap.get(blockUUID);
+
+    if (firstClickedBlockUUIDs.containsKey(playerId) &&
+        firstClickedBlockUUIDs.get(playerId).equals(blockUUID)) {
+      return;
+    }
+
+    if (firstClickedBlockUUIDs.containsKey(playerId)) {
+      UUID lastClickedBlockUUID = firstClickedBlockUUIDs.get(playerId);
+      int lastClickedBlockPairId = firstClickedBlockPairIds.get(playerId);
+
+      if (lastClickedBlockPairId == currentPairId && !lastClickedBlockUUID.equals(blockUUID)) {
+        handleMatchedPair(player, lastClickedBlockUUID, blockUUID);
+      } else {
+        handleMismatch(player, playerId, blockUUID);
+      }
+
+      firstClickedBlockUUIDs.remove(playerId);
+      firstClickedBlockPairIds.remove(playerId);
+    } else {
+      firstClickedBlockUUIDs.put(playerId, blockUUID);
+      firstClickedBlockPairIds.put(playerId, currentPairId);
+
+      int blockId = entityPairMap.get(blockUUID);
+      player.sendMessage(ChatColor.GREEN + "ブロックNo:" + blockId);
+    }
+  }
+
+  /**
+   * プレイヤーがクリックしたブロックがペアとして一致しなかった場合の処理。
+   *
+   * @param player クリックしたプレイヤーオブジェクト
+   * @param playerId プレイヤーのUUID
+   * @param blockUUID クリックされたブロックのUUID
+   */
+  private void handleMismatch(Player player, UUID playerId, UUID blockUUID) {
+    int blockId = entityPairMap.get(blockUUID);
+    player.sendMessage(ChatColor.GREEN + "ブロックのNo:" + blockId);
+
+    // ミスマッチリストに追加して新しい開始を待つ状態にする
+    missMatchList.add(playerId);
+  }
+
+
+  /**
+   * 指定された位置に対応するブロックのUUIDを検索。
+   *
+   * @param location 検索対象のブロックの位置
+   * @return 対応するブロックのUUID。一致するブロックが見つからない場合は、nullを返す
    */
   private UUID findBlockUUID(Location location) {
     for (Map.Entry<UUID, Object> entry : enemyMap.entrySet()) {
@@ -623,7 +663,11 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * ペアが一致した場合の処理。
+   * プレイヤーが一致するペアのブロックを見つけた場合の処理。
+   *
+   * @param player 一致するペアを見つけたプレイヤーオブジェクト
+   * @param lastBlockUUID 最初にクリックされたブロックのUUID
+   * @param currentBlockUUID 2回目にクリックされたブロックのUUID
    */
   private void handleMatchedPair(Player player, UUID lastBlockUUID, UUID currentBlockUUID) {
     Block lastBlock = (Block) enemyMap.get(lastBlockUUID);
