@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * コマンドを実行して動かすプラグイン処理の基底クラスです。
+ * コマンドを実行して動かすプラグイン処理の基底クラス。
  */
 public abstract class BaseCommand implements CommandExecutor {
 
@@ -20,7 +20,7 @@ public abstract class BaseCommand implements CommandExecutor {
   }
 
   /**
-   * コマンド実行者がプレイヤーだった場合に実行します。
+   * コマンド実行者がプレイヤーだった場合に実行。
    * @param player　コマンドを実行したプレイヤー
    * @param command コマンド
    * @param  label ラベル
@@ -30,7 +30,7 @@ public abstract class BaseCommand implements CommandExecutor {
   public abstract boolean onExecutePlayerCommand(Player player, Command command, String label, String[] args);
 
   /**
-   * コマンドの実行者がプレイヤー以外だった場合に実行します。
+   * コマンドの実行者がプレイヤー以外だった場合に実行。
    * @param sender　コマンドの実行者
    * @param command コマンド
    * @param  label ラベル

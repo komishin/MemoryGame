@@ -69,8 +69,8 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
     String difficulty = getDifficulty(args, player);
 
     if (HARD.equals(difficulty)) {
-      hardDifficultyWorld = player.getWorld(); // 現在のワールドを保存
-      setNight(player.getWorld()); // 夜にする
+      hardDifficultyWorld = player.getWorld();
+      setNight(player.getWorld());
     }
 
     if (args.length == 1 && LIST.equals(args[0])){
@@ -155,7 +155,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * コマンド引数から難易度を取得します。
+   * コマンド引数から難易度を取得。
    *
    * @param args コマンド引数の配列
    * @param player コマンドを実行したプレイヤー
@@ -196,7 +196,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * プレイヤーの前方10ブロックの位置にある安全な地上の位置を計算します。
+   * プレイヤーの前方10ブロックの位置にある安全な地上の位置を計算。
    *
    * @param player テレポート先を計算するプレイヤー
    * @return プレイヤーの前方6ブロックにある安全な地上の位置
@@ -212,7 +212,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
 
   /**
    * ゲーム開始前のカウントダウンを開始し、ゲームを準備するメソッド。
-   * カウントダウン後、ブロックを配置し、ゲームタイマーを開始します。
+   * カウントダウン後、ブロックを配置し、ゲームタイマーを開始。
    *
    * @param player ゲームを開始するプレイヤー
    * @param finalLocation ゲームの開始位置
@@ -236,8 +236,8 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * ゲーム開始までのカウントダウンをプレイヤーにタイトルとして表示します。
-   * 指定された秒数をタイトルに含めて表示します。
+   * ゲーム開始までのカウントダウンをプレイヤーにタイトルとして表示。
+   * 指定された秒数をタイトルに含めて表示。
    *
    * @param player       タイトルを表示する対象のプレイヤー
    * @param countdownTime カウントダウンの残り時間（秒）
@@ -247,7 +247,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * ゲームを開始し、プレイヤーに開始タイトルを表示し、エンティティを設定し、ゲームタイマーを開始します。
+   * ゲームを開始し、プレイヤーに開始タイトルを表示し、エンティティを設定し、ゲームタイマーを開始。
    *
    * @param player       ゲームを開始するプレイヤー
    * @param finalLocation ゲームの最終的な位置
@@ -282,7 +282,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * 指定された中心位置を基準に、ブロックのグリッドを生成します。
+   * 指定された中心位置を基準に、ブロックのグリッドを生成。
    *
    * @param centerLocation グリッドの中心となる位置
    * @param material 生成するブロックの種類
@@ -355,7 +355,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   /**
    * ペアのIDを生成するためのリストを作成。
    *
-   * @param count 生成するIDの総数。偶数である必要あり。
+   * @param count 生成するIDの総数。
    * @return シャッフルされたペアIDのリスト
    * @throws IllegalArgumentException countが奇数の場合
    */
@@ -412,7 +412,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
 
 
   /**
-   * プレイヤーがゲームをクリアした際の処理を行うメソッド。 タイマーを停止し、クリアメッセージを表示します。
+   * プレイヤーがゲームをクリアした際の処理を行うメソッド。 タイマーを停止し、クリアメッセージを表示。
    *
    * @param player クリアしたプレイヤー
    */
@@ -442,7 +442,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * プレイヤーの制限時間が切れた際の処理を行うメソッド。 タイマーを停止・削除し、スポーンしたエンティティをクリアし、 時間切れメッセージを表示します。
+   * プレイヤーの制限時間が切れた際の処理を行うメソッド。 タイマーを停止・削除し、スポーンしたエンティティをクリアし、 時間切れメッセージを表示。
    *
    * @param player 制限時間が切れたプレイヤー
    */
@@ -795,7 +795,7 @@ public class MemoryGameCommand extends BaseCommand implements Listener {
   }
 
   /**
-   * スポーンしたエンティティをクリアする
+   * スポーンしたエンティティをクリアする。
    */
   private void clearSpawnedEntities() {
     for (Object obj : enemyMap.values()) {

@@ -10,7 +10,7 @@ import plugin.memoryGame.mapper.PlayerScoreMapper;
 import plugin.memoryGame.mapper.data.PlayerScore;
 
 /**
- * DB接続やそれに付随する登録や更新処理を行うクラスです。
+ * DB接続やそれに付随する登録や更新処理を行うクラス。
  */
 public class PlayerScoreData {
 
