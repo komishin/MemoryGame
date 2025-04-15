@@ -72,7 +72,7 @@ https://github.com/user-attachments/assets/c50349c5-2f8b-4059-96fb-6a155248ae09
 | テーブル名 | player_score | 
 
 ## データベース構成
-|カラム名　　　　 |出現物　　　 |
+|カラム名　　　　 |説明　　 |
 |-----|-----|
 | id | 主キー、自動採番 |
 | player_name | プレイヤー名 |
