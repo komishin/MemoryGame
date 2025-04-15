@@ -80,7 +80,7 @@ https://github.com/user-attachments/assets/c50349c5-2f8b-4059-96fb-6a155248ae09
 | player_name | プレイヤー名 |
 | score | 一致したベア数 |
 | difficulty | 難易度 | 
-| clearTime | クリアした時間（タイムアップ） | 
+| clearTime | クリアした時間（秒）（タイムアップ時間） | 
 | registered_at | 登録日時 | 
 
 ## 遊び方
