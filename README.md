@@ -67,6 +67,22 @@ https://github.com/user-attachments/assets/c50349c5-2f8b-4059-96fb-6a155248ae09
 | normal | CHICKEN | 剣でのダメージなし |
 | hard | ZOMBIE | 剣でのダメージなし＆夜に変更 |
 
+## データベース設計
+|属性　　　　 |設定値　　　 |
+|-----|-----|
+| データベース名 | spigot_server |
+| テーブル名 | player_score | 
+
+## データベース構成
+|カラム名　　　　 |出現物　　　 |
+|-----|-----|
+| id | 主キー、自動採番 |
+| player_name | プレイヤー名 |
+| score | 一致したベア数 |
+| difficulty | 難易度 | 
+| clearTime | クリアした時間（タイムアップ） | 
+| registered_at | 登録日時 | 
+
 ## 遊び方
 
 １．コマンドに難易度を選択して入力
